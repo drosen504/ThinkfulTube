@@ -16,19 +16,17 @@ function getDataFromApi(searchTerm, callback) {
 
 function renderResult(result) {
   console.log(result);
-  //   console.log(result.id.videoID);
   return `
     <div>
-      <a href= 'https://www.youtube.com/watch?v=${result.id.videoID}' target= '_blank'> ${result.snippet.title}
-      <img class='js-thumbnail' src='${result.snippet.thumbnails.medium.url}'</a>
-
+    <a href = 'https://www.youtube.com/watch?v=${result.id.videoId}' target= '_blank'>${result.snippet.title}<br>
+      <img class='js-thumbnail' src='${result.snippet.thumbnails.medium.url}'
+    </a>
     </div>
   `;
 }
 
 function displayYTSearchData(data) {
   const results = data.items.map((item) => renderResult(item));
-  console.log(results);
   $('.js-search-results').html(results);
 }
 
