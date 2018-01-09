@@ -1,27 +1,30 @@
 'use strict';
+/* global $ */
 
 const YT_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search';
 
 function getDataFromApi(searchTerm, callback) {
   const query = {
-    q: `${searchTerm} in:name`,
-    per_page: 5
+    part: 'snippet',
+    q: searchTerm,
+    key: 'AIzaSyA13I4b3i6USOCq0Z5yPX1VsCYeE0dzE-E'
+    
   };
   $.getJSON(YT_SEARCH_URL, query, callback);
+  console.log($.getJSON(YT_SEARCH_URL, query));
 }
 
 function renderResult(result) {
+  console.log(result);
   return `
     <div>
-      <h2>
-      <a class="js-result-name" href="${result.html_url}" target="_blank">${result.name}</a> by <a class="js-user-name" href="${result.owner.html_url}" target="_blank">${result.owner.login}</a></h2>
-      <p>Number of watchers: <span class="js-watchers-count">${result.watchers_count}</span></p>
-      <p>Number of open issues: <span class="js-issues-count">${result.open_issues}</span></p>
+      <a href= 'https://www.youtube.com/watch?v=${result.id.videoID}' target="_blank">${result.snippet.title}</a>
+
     </div>
   `;
 }
 
-function displayGitHubSearchData(data) {
+function displayYTSearchData(data) {
   const results = data.items.map((item, index) => renderResult(item));
   $('.js-search-results').html(results);
 }
@@ -33,7 +36,7 @@ function watchSubmit() {
     const query = queryTarget.val();
     // clear out the input
     queryTarget.val('');
-    getDataFromApi(query, displayGitHubSearchData);
+    getDataFromApi(query, displayYTSearchData);
   });
 }
 
