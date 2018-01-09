@@ -17,6 +17,10 @@ function getDataFromApi(searchTerm, callback) {
 function renderResult(result) {
   console.log(result);
   return `
+  <nav class "js-nav">
+  <button class="js-button-prev" type = "submit">Previous</button>
+  <button class="js-button-next" type = "submit">Next</button>
+  </nav><br>   
     <div>
     <a href = 'https://www.youtube.com/watch?v=${result.id.videoId}' target= '_blank'>${result.snippet.title}<br>
       <img class='js-thumbnail' src='${result.snippet.thumbnails.medium.url}'
