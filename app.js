@@ -13,10 +13,8 @@ function getDataFromApi(searchTerm, callback, pageToken) {
     q: searchTerm,
     key: API_KEY
   };
-  console.log(query);
   $.getJSON(YT_SEARCH_URL, query, callback);
   lastSearch = query.q;
-  console.log(query);
 }
 
 function renderResult(result) {
@@ -39,11 +37,22 @@ function renderMoreButton(token) {
     `);
 }
 
+function renderPrevButton(token) {
+  $('#prev-results').html(`
+  <button id='prev-vids' type='button' data-token='${token}'>Previous results</button>
+  `);
+}
+
 function displayYTSearchData(data) {
   const results = data.items.map((item) => renderResult(item));
-  let pageToken = data.nextPageToken;
+  let nextPageToken = data.nextPageToken;
   $('.js-search-results').html(results);
-  renderMoreButton(pageToken);
+  console.log($('#prev-vids').data('token'));
+  if ($('#prev-vids').data('token') === undefined) {
+    $('#prev-vids').data('#prev-vides', 'token', data.prevPageToken);
+  }
+  renderMoreButton(nextPageToken);
+  
 } 
 
 function watchSubmit() {
@@ -59,9 +68,12 @@ function watchSubmit() {
 
 //waits for more results button to be clicked and triggers new API call be made.
 $('#more-results').click(event => {
-  console.log($('#more-vids').data('token'));
-  // let pageToken = $('#more-results.button').attr('data-token');
   getDataFromApi(lastSearch, displayYTSearchData, $('#more-vids').data('token'));
+  renderPrevButton();
+});
+
+$('#prev-results').click(event => {
+  getDataFromApi(lastSearch, displayYTSearchData, $('#prev-vids').data('token'));
 });
 
 
