@@ -2,7 +2,7 @@
 /* global $ */
 
 const YT_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search';
-const API_KEY = 'AIzaSyA13I4b3i6USOCq0Z5yPX1VsCYeE0dzE-E'
+const API_KEY = 'AIzaSyA13I4b3i6USOCq0Z5yPX1VsCYeE0dzE-E';
 
 function getDataFromApi(searchTerm, callback) {
   const query = {
@@ -47,4 +47,14 @@ function watchSubmit() {
   });
 }
 
+const clickNext = function() {
+  $('.js-button-next').click(event => {
+    event.preventDefault;
+    console.log('next button clicked');
+  });
+};
+
 $(watchSubmit);
+$(function() {
+  $(clickNext);
+});
