@@ -3,10 +3,12 @@
 
 const YT_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search';
 const API_KEY = 'AIzaSyA13I4b3i6USOCq0Z5yPX1VsCYeE0dzE-E';
+let pageToken = null;
 
 function getDataFromApi(searchTerm, callback) {
   const query = {
     part: 'snippet',
+    pageToken: pageToken,
     q: searchTerm,
     key: API_KEY
     
@@ -35,9 +37,11 @@ function renderMoreButton() {
 
 function displayYTSearchData(data) {
   const results = data.items.map((item) => renderResult(item));
+  pageToken = data.nextPageToken;
+  console.log(pageToken);
   $('.js-search-results').html(results);
   renderMoreButton();
-}
+} 
 
 function watchSubmit() {
   $('.js-search-form').submit(event => {
@@ -50,8 +54,13 @@ function watchSubmit() {
   });
 }
 
+// function watchNextResults() {
+  
+
 $('#more-results').on('click', event => {
   console.log('nextbutton clicked');
+  getDataFromApi(displayYTSearchData);
+  
 });
 
 
