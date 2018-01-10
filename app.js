@@ -3,12 +3,10 @@
 
 const YT_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search';
 const API_KEY = 'AIzaSyA13I4b3i6USOCq0Z5yPX1VsCYeE0dzE-E';
-// let pageToken = null;
-let lastQuery = {};
+let lastSearch = '';
 
 
 function getDataFromApi(searchTerm, callback, pageToken) {
-  console.log(lastQuery);
   const query = {
     part: 'snippet',
     pageToken: pageToken,
@@ -17,7 +15,8 @@ function getDataFromApi(searchTerm, callback, pageToken) {
   };
   console.log(query);
   $.getJSON(YT_SEARCH_URL, query, callback);
-  lastQuery = query;
+  lastSearch = query.q;
+  console.log(query);
 }
 
 function renderResult(result) {
@@ -36,13 +35,13 @@ function renderResult(result) {
 
 function renderMoreButton(token) {
   $('#more-results').html(`
-  <button type='button' data-token='${token}'>More results</button>`);
+    <button id='more-vids' type='button' data-token='${token}'>More results</button>
+    `);
 }
 
 function displayYTSearchData(data) {
   const results = data.items.map((item) => renderResult(item));
   let pageToken = data.nextPageToken;
-  console.log(pageToken);
   $('.js-search-results').html(results);
   renderMoreButton(pageToken);
 } 
@@ -59,9 +58,10 @@ function watchSubmit() {
 }
 
 //waits for more results button to be clicked and triggers new API call be made.
-$('#more-results').on('click', event => {
-  console.log('more results clicked');
-  getDataFromApi(lastQuery, displayYTSearchData);
+$('#more-results').click(event => {
+  console.log($('#more-vids').data('token'));
+  // let pageToken = $('#more-results.button').attr('data-token');
+  getDataFromApi(lastSearch, displayYTSearchData, $('#more-vids').data('token'));
 });
 
 
