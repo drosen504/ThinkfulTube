@@ -39,13 +39,13 @@ function watchSubmit() {
     const query = queryTarget.val();
     // clear out the input
     queryTarget.val('');
-    getDataFromApi(query, displayYTSearchData);
+    getDataFromApi(query, generator.displayYTSearchData);
   });
 }
 
 //waits for more results button to be clicked and triggers new API call be made.
 $('#more-results').click(event => {
-  getDataFromApi(lastSearch, displayYTSearchData, $('#more-vids').data('token'));
+  getDataFromApi(lastSearch, generator.displayYTSearchData, $('#more-vids').data('token'));
   // generator.renderPrevButton();
 });
 
