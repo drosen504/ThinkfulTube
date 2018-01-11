@@ -37,20 +37,20 @@ function renderMoreButton(token) {
     `);
 }
 
-function renderPrevButton(token) {
-  $('#prev-results').html(`
-  <button id='prev-vids' type='button' data-token='${token}'>Previous results</button>
-  `);
-}
+// function renderPrevButton(token) {
+//   $('#prev-results').html(`
+//   <button id='prev-vids' type='button' data-token='${token}'>Previous results</button>
+//   `);
+// }
 
 function displayYTSearchData(data) {
   const results = data.items.map((item) => renderResult(item));
   let nextPageToken = data.nextPageToken;
   $('.js-search-results').html(results);
-  console.log($('#prev-vids').data('token'));
-  if ($('#prev-vids').data('token') === undefined) {
-    $('#prev-vids').data('#prev-vides', 'token', data.prevPageToken);
-  }
+  // console.log($('#prev-vids').data('token'));
+  // if ($('#prev-vids').data('token') === undefined) {
+  //   $('#prev-vids').data('#prev-vides', 'token', data.prevPageToken);
+  // }
   renderMoreButton(nextPageToken);
   
 } 
@@ -72,9 +72,9 @@ $('#more-results').click(event => {
   renderPrevButton();
 });
 
-$('#prev-results').click(event => {
-  getDataFromApi(lastSearch, displayYTSearchData, $('#prev-vids').data('token'));
-});
+// $('#prev-results').click(event => {
+//   getDataFromApi(lastSearch, displayYTSearchData, $('#prev-vids').data('token'));
+// });
 
 
 $(watchSubmit);
