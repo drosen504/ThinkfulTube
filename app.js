@@ -7,7 +7,6 @@ let lastSearch = '';
 
 
 function getDataFromApi(searchTerm, callback, pageToken) {
-  console.log('getDataFromApi ran');
   const query = {
     part: 'snippet',
     pageToken: pageToken,
@@ -18,61 +17,30 @@ function getDataFromApi(searchTerm, callback, pageToken) {
   lastSearch = query.q;
 }
 
-function renderResult(result) {
-  console.log(result);
-  return `
-            </div><br>   
-                <div>
-                <a href = 'https://www.youtube.com/watch?v=${result.id.videoId}' target= '_blank'>${result.snippet.title}<br>
-                <img class='js-thumbnail' src='${result.snippet.thumbnails.medium.url}'
-                </a><br>
-                <a href = 'https://www.youtube.com/channel/${result.snippet.channelId}/videos' target= '_blank'>More videos from ${result.snippet.channelTitle}.</a> 
-                </div>
-                <br>
-            `;
-}
-function renderMoreButton(token) {
-  $('#more-results').html(`
-      <button id='more-vids' type='button' data-token='${token}'>More results</button>
-      `);
-}
-
-function renderPrevButton(token) {
-  $('#prev-results').html(`
-  <button id='prev-vids' type='button' data-token='${token}'>Previous results</button>
-  `);
-}
-
-function displayYTSearchData(data) {
-  const results = data.items.map((item) => renderResult(item));
-  let nextPageToken = data.nextPageToken;
-  $('.js-search-results').html(results);
-  renderMoreButton(nextPageToken);
-}
-
-  
-
+// function renderPrevButton(token) {
+//   $('#prev-results').html(`
+//   <button id='prev-vids' type='button' data-token='${token}'>Previous results</button>
+//   `);
+// }
 
 function watchSubmit() {
   $('.js-search-form').submit(event => {
     event.preventDefault();
     const queryTarget = $(event.currentTarget).find('.js-query');
     const query = queryTarget.val();
-    console.log(query);
-    // clear out the input
     queryTarget.val('');
-    getDataFromApi(query, displayYTSearchData);
+    getDataFromApi(query, generator.displayYTSearchData);
   });
 }
 
 //waits for more results button to be clicked and triggers new API call be made.
 $('#more-results').click(event => {
-  getDataFromApi(lastSearch, displayYTSearchData, $('#more-vids').data('token'));
+  getDataFromApi(lastSearch, generator.displayYTSearchData, $('#more-vids').data('token'));
 });
 
-$('#prev-results').click(event => {
-  getDataFromApi(lastSearch, displayYTSearchData, $('#prev-vids').data('token'));
-});
+// $('#prev-results').click(event => {
+//   getDataFromApi(lastSearch, displayYTSearchData, $('#prev-vids').data('token'));
+// });
 
 $(watchSubmit);
 
