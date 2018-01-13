@@ -1,11 +1,11 @@
 'use strict';
-/*$ global $*/
+/* global $ */
 
 const generator = function() {
   return { 
     renderResult: function(result) {
       return `
-                </div><br>   
+                <br>   
                     <div>
                     <a href = 'https://www.youtube.com/watch?v=${result.id.videoId}' target= '_blank'>${result.snippet.title}<br>
                     <img class='js-thumbnail' src='${result.snippet.thumbnails.medium.url}'
