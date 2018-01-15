@@ -8,9 +8,9 @@ const generator = function() {
                 <br>   
                     <div>
                     <a href = 'https://www.youtube.com/watch?v=${result.id.videoId}' target= '_blank'>${result.snippet.title}<br>
-                    <img class='js-thumbnail' src='${result.snippet.thumbnails.medium.url}'
+                    <img class='js-thumbnail' role="link" alt="youtube result thumbnail image" tabindex="0" src='${result.snippet.thumbnails.medium.url}'
                     </a><br>
-                    <a href = 'https://www.youtube.com/channel/${result.snippet.channelId}/videos' target= '_blank'>More videos from ${result.snippet.channelTitle}.</a> 
+                    <a role="link" href = 'https://www.youtube.com/channel/${result.snippet.channelId}/videos' target= '_blank'>More videos from ${result.snippet.channelTitle}.</a> 
                     </div>
                     <br>
                 `;
