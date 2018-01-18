@@ -13,6 +13,7 @@ const generator = function() {
                     <a role="link" href = 'https://www.youtube.com/channel/${result.snippet.channelId}/videos' target= '_blank'>More videos from ${result.snippet.channelTitle}.</a> 
                     </div>
                     <br>
+                    <hr>
                 `;
     },
                 
